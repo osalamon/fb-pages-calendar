@@ -1,40 +1,44 @@
 <template>
-
-  <section>
-    <div class="container">
-      <h1 class="title">
-        fb-pages-calendar
-      </h1>
-      <h2 class="subtitle">
-        A simple app for displaying events from FB pages you don&#39;t want to
-        miss
-      </h2>
-    </div>
-  </section>
+  <div class="is-radiusless is-shadowless is-marginless is-paddingless">
+    <Navbar />
+    <section class="section">
+      <div class="container">
+        <h1 class="title">
+          fb-pages-calendar
+        </h1>
+        <h2 class="subtitle">
+          A simple app for displaying events from FB pages you don&#39;t want to
+          miss
+        </h2>
+        <h3>
+          {{ ip }}
+        </h3>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
 import Navbar from '~/components/Navbar.vue'
 
 export default {
   components: {
-    Logo,
     Navbar
+  },
+  async asyncData({ $axios }) {
+    const ip = await $axios.$get('http://icanhazip.com')
+    return { ip }
+  },
+  methods: {
+    async fetchSomething() {
+      const ip = await this.$axios.$get('http://icanhazip.com')
+      this.ip = ip
+    }
   }
 }
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
 .title {
   font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
